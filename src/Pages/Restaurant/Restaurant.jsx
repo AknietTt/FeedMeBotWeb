@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-function Restaurant({ id, name, image, desc }) {
+export default function Restaurant() {
+  const { id } = useParams(); 
+
   const handleClick = () => {
-    window.location.href = `/restaurant/${id}`;
+    const apiUrl = `https://localhost:7242/api/Restaurant/get/City/${id}`;
+    
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        debugger;
+        console.log(data);
+        window.location.href = `/restaurant/${id}`;
+      })
+      .catch(error => {
+        console.error('Ошибка при получении данных:', error);
+      });
   };
 
+  useEffect(() => {
+    handleClick();
+  }, []);
+
   return (
-    <div className="restaurant" onClick={handleClick}>
-      <h2>{name}</h2>
-      <img src={image} alt={name} />
-      <p>{desc}</p>
+    <div className="restaurant">
+
     </div>
   );
 }
-
-export default Restaurant;

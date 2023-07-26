@@ -13,6 +13,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<Cities />} />
+        <Route path="/cities/:id" element = {<Restaurant/>} />
         <Route path="/restaurant/:id" element={<Category/>} />
       </Routes>
     </div>
