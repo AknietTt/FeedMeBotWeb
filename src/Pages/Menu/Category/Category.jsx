@@ -1,26 +1,36 @@
-import React from "react";
-import { useParams } from "react-router";
-import categories from "../../../Data/data";
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 
-export const Category = () => {
+function Category() {
   const { id } = useParams();
-  
-  const restaurantCategories = categories.find(
-    (category) => category.restaurantId === parseInt(id, 10)
-  );
+  const [categories, setCategories] = useState([]);
 
-  if (!restaurantCategories) {
-    return <div>Ресторан не найден</div>;
-  }
+  useEffect(() => {
+    const apiUrl = `https://localhost:7242/api/Category/get/Restaurant/${id}`;
+
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        setCategories(data); // Сохраняем полученные данные в состояние
+      })
+      .catch(error => {
+        console.error('Ошибка при получении данных:', error);
+      });
+  }, [id]);
+
   return (
     <div>
-      <h2>Категории ресторана</h2>
-      <h3>Категории:</h3>
+      <h1>Category</h1>
       <ul>
-        {restaurantCategories.category.map((category, index) => (
-          <li key={index}>{category}</li>
+        {categories.map(category => (
+          // Используем поле id в URL и тексте ссылки
+          <li key={category.id}>
+            <Link to={`/category/${category.id}`}>{category.name}</Link>
+          </li>
         ))}
       </ul>
     </div>
   );
-};
+}
+
+export default Category;
