@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import Cart from "../../Cart/Cart";
 
-function Category() {
+function Category({cartItems , incrementQuantity, decrementQuantity  }) {
   const { id } = useParams();
   const [categories, setCategories] = useState([]);
 
+  
   useEffect(() => {
     const apiUrl = `https://localhost:7242/api/Category/get/Restaurant/${id}`;
 
@@ -29,6 +31,7 @@ function Category() {
           </li>
         ))}
       </ul>
+      <Cart cartItems={cartItems} onIncrement={incrementQuantity} onDecrement={decrementQuantity} />
     </div>
   );
 }
