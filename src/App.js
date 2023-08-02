@@ -2,87 +2,27 @@ import "./App.css";
 
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
-import Cities from "./Pages/Menu/Cities/Cities";
-import Category from "./Pages/Menu/Category/Category";
+import Cities from "./Pages/Cities/Cities";
 import Restaurants from "./Pages/Restaurants/Restaurants";
+import Category from "./Pages/Menu/Category/Category";
 import Foods from "./Pages/Menu/Foods/Foods";
-import { useState } from "react";
+import Purchase from "./Pages/Purchase/Purchase";
+import Payment from "./Pages/Payment/Payment";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 function App() {
-  const [cartItems, setCartItems] = useState([]);
-
-  const addToCart = (food, quantity) => {
-    const existingItem = cartItems.find((item) => item.id === food.id);
-
-    if (existingItem) {
-      existingItem.quantity += quantity;
-      setCartItems([...cartItems]);
-    } else {
-      setCartItems((prevCartItems) => [
-        ...prevCartItems,
-        { ...food, quantity },
-      ]);
-    }
-  };
-
-  const removeFromCart = (food) => {
-    setCartItems((prevCartItems) =>
-      prevCartItems.filter((item) => item.id !== food.id)
-    );
-  };
-
-  const incrementQuantity = (food) => {
-    debugger;
-    const updatedCartItems = cartItems.map((item) => {
-      if (item.id === food.id) {
-        return { ...item, quantity: item.quantity + 1 };
-      }
-      return item;
-    });
-    setCartItems(updatedCartItems);
-  };
-
-  const decrementQuantity = (food) => {
-    const updatedCartItems = cartItems.map((item) => {
-      if (item.id === food.id) {
-        const updatedQuantity = item.quantity - 1;
-        if (updatedQuantity === 0) {
-          removeFromCart(item);
-        }
-        return { ...item, quantity: updatedQuantity };
-      }
-      return item;
-    });
-    setCartItems(updatedCartItems);
-  };
-
   return (
     <div>
-      <Routes>
-        <Route path="/" element={<Cities />} />
-        <Route path="/cities/:id" element={<Restaurants />} />
-        <Route
-          path="/restaurant/:id"
-          element={
-            <Category
-              cartItems={cartItems}
-              onIncrement={incrementQuantity}
-              onDecrement={decrementQuantity}
-            />
-          }
-        />
-        <Route
-          path="/category/:id"
-          element={
-            <Foods
-              cartItems={cartItems}
-              onAddToCart={addToCart}
-              onIncrement={incrementQuantity}
-              onDecrement={decrementQuantity}
-            />
-          }
-        />
-      </Routes>
+      <Provider store={store}>
+        <Routes>
+          <Route path="/" element={<Cities />} />
+          <Route path="/restaurants/:id" element={<Restaurants />} />
+          <Route path="/restaurant/:id" element={<Purchase />} />
+          <Route path="/restaurant/:id/*" element={<Purchase />} />
+          <Route path="/payment" element={<Payment />} />
+        </Routes>
+      </Provider>
     </div>
   );
 }

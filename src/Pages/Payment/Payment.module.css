@@ -1,0 +1,44 @@
+/* Payment.module.css */
+
+.paymentContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .orderDetails {
+    margin-top: 20px;
+  }
+  
+  /* Медиа-запрос для мобильных устройств с шириной 600px или менее */
+  @media screen and (max-width: 600px) {
+    input {
+      font-size: 16px;
+    }
+  
+    button {
+      font-size: 16px;
+    }
+  }
+  
