@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Card } from "antd";
+import Meta from "antd/es/card/Meta";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import styles from './Restaurants.module.css';
 
 export default function Restaurants() {
   const { id } = useParams();
   const [restaurants, setRestaurants] = useState([]);
-
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
@@ -20,20 +21,28 @@ export default function Restaurants() {
     fetchRestaurants();
   }, [id]);
 
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins:wght@600&family=Rubik:wght@600&display=swap"
+    rel="stylesheet"
+  ></link>;
+
   return (
     <div className={styles.container}>
-      <h1>Рестораны </h1>
-      <div className={styles.restaurantsList}>
-        {restaurants.map((restaurant) => (
-          <Link key={restaurant.id} to={`/restaurant/${restaurant.id}`} className={styles.link}>
-            <div className={styles.restaurantCard}>
-              <h2>{restaurant.name}</h2>
-              <img src={restaurant.image} alt={restaurant.name} />
-              <p>{restaurant.description}</p>
-            </div>
-          </Link>
-        ))}
-      </div>
+    <h1 style={{fontFamily:"Rubik,sans-serif"}}>Рестораны</h1>
+    <div className={styles.restaurantsList}>
+      {restaurants.map((restaurant) => (
+        <Link key={restaurant.id} to={`/restaurant/${restaurant.id}/?name=${restaurant.name}`} className={styles.link}>
+          <Card
+            hoverable
+            className={styles.restaurantCard}
+            cover={<img alt={restaurant.name} src={restaurant.image} />}
+            size = "default"
+          >
+            <Meta title={restaurant.name} description={restaurant.description} />
+          </Card>
+        </Link>
+      ))}
     </div>
+  </div>
   );
 }

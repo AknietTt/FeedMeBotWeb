@@ -1,41 +1,31 @@
 /* Category.module.css */
-
 .container {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  h1 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .categoryList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .categoryList li {
-    margin-bottom: 15px;
-  }
-  
-  .link {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 8px;
-    width: 200px; /* Установите ширину кнопки здесь */
-    transition: background-color 0.2s, transform 0.2s;
-  }
-  
-  .link:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto; /* Центрируем компонент по горизонтали */
+  max-width: 1200px; /* Устанавливаем максимальную ширину для компонента */
+  padding: 20px; /* Добавляем отступ по бокам */
+}
+
+h1 {
+  font-family: "Rubik", sans-serif; /* Задаем шрифт для заголовка h1 */
+}
+
+.categoryList {
+  display: flex; /* Используем Flexbox для вертикального расположения кнопок */
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px; /* Добавляем отступ сверху */
+}
+
+.link {
+  text-decoration: none;
+  margin: 5px; /* Уменьшаем отступы по бокам ссылки */
+}
+
+/* Добавляем стиль для всех кнопок */
+.link button {
+  margin-top: 10px;
+  width: 200px; /* Устанавливаем фиксированную ширину кнопки */
+}

@@ -1,7 +1,9 @@
-// Import useNavigate instead of useHistory
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Button, Select } from "antd";
+import { useNavigate } from "react-router-dom";
 import styles from "./Cities.module.css";
-import { useEffect, useState } from "react";
+
+const { Option } = Select;
 
 export default function Cities() {
   const [cities, setCities] = useState([]);
@@ -22,8 +24,8 @@ export default function Cities() {
     fetchCities();
   }, []);
 
-  function handleCityChange(event) {
-    setSelectedCity(event.target.value);
+  function handleCityChange(value) {
+    setSelectedCity(value);
   }
 
   function redirectToPage() {
@@ -31,21 +33,30 @@ export default function Cities() {
       navigate(`/restaurants/${selectedCity}`);
     }
   }
-
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins:wght@600&family=Rubik:wght@600&display=swap"
+    rel="stylesheet"
+  ></link>;
+  
   return (
     <div className={styles.container}>
-      <label>Выберите город:</label>
-      <select className={styles.select} onChange={handleCityChange}>
-        <option value="">Выберите город</option>
-        {cities.map((city) => (
-          <option key={city.id} value={city.id}>
-            {city.name}
-          </option>
-        ))}
-      </select>
-      <button className={styles.button} onClick={redirectToPage}>
-        Выбрать
-      </button>
-    </div>
+    <label className={styles.label}>Выберите город:</label>
+    <Select
+      className={styles.select}
+      placeholder="Выберите город"
+      onChange={handleCityChange}
+      value={selectedCity}
+    >
+      {cities.map((city) => (
+        <Option key={city.id} value={city.id}>
+          {city.name}
+        </Option>
+      ))}
+    </Select>
+
+    <Button className={styles.button} type="primary" size="large" onClick={redirectToPage}>
+      Выбрать
+    </Button>
+  </div>
   );
 }

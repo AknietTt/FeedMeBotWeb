@@ -1,18 +1,72 @@
-/* Cart.module.css */
 .cartContainer {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-top: 20px;
-  }
-  
-  .cartItem {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
-  }
-  
-  .totalPrice {
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%; /* Ширина контейнера корзины */
+  max-width: 400px;
+  background-color: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 5px;
+  padding: 16px;
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.5);
+  z-index: 999; /* Установка z-index, если это необходимо для правильного отображения на вашем сайте */
+  overflow-y: auto; /* Включение вертикальной прокрутки, если контент превышает максимальную высоту */
+}
+.removeButton {
+  background-color: #ff4d4f;
+  color: #ffffff;
+  border: none;
+  margin:  0px 10px 0px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cartPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.showCartButton {
+  margin-bottom: 16px;
+}
+
+.cartItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.cartItem p {
+  flex: 1;
+  margin: 0;
+}
+
+.itemInfo {
+  flex: 2;
+}
+
+.quantityContainer {
+  display: flex;
+  align-items: center;
+}
+
+.totalPrice {
+  text-align: right;
+  margin-top: 16px;
+}
+
+.itemPrice {
+  font-size: 12px;
+  color: #888;
+}
+.itemPrice {
+  font-size: 12px;
+  color: #888;
+}
+.itemPrice {
+  font-size: 12px;
+  color: #888;
+}

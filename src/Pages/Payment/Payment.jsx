@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button, Input, Form, Typography } from "antd";
 import styles from "./Payment.module.css";
 import { useNavigate } from "react-router";
 import { clearCart } from "../../redux/actions/cartActions";
+
+const { Title } = Typography;
 
 function Payment() {
   const cartItems = useSelector((state) => state.cart);
@@ -17,10 +20,7 @@ function Payment() {
   });
 
   const calculateTotalPrice = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
   const handleInputChange = (event) => {
@@ -32,6 +32,7 @@ function Payment() {
   };
 
   const handleOrder = () => {
+    // ... (остальной код обработки заказа)
     const apiUrl = "https://localhost:7242/api/Order/add/order";
 
     const orderItems = cartItems.map((item) => ({
@@ -42,10 +43,11 @@ function Payment() {
         price: item.price,
         menuId: item.menuId,
         categoryId: item.categoryId,
+        image: "", // Здесь вы можете указать ссылку на изображение продукта, если имеется
       },
       count: item.quantity,
     }));
-
+  
     const orderData = {
       customer: {
         username: formData.name,
@@ -57,8 +59,7 @@ function Payment() {
       items: orderItems,
       totalPrice: calculateTotalPrice(),
     };
-    
-    console.log(orderData);
+  
     fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -70,7 +71,6 @@ function Payment() {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        // Проверяем на пустой ответ
         if (response.status === 204) {
           return null;
         }
@@ -91,45 +91,28 @@ function Payment() {
 
   return (
     <div className={styles.paymentContainer}>
-      <h2>Payment</h2>
-      <form>
-        <label>
-          Имя:
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <label>
-          Номер:
-          <input
-            type="text"
-            name="number"
-            value={formData.number}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <label>
-          Адрес:
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <label>Общая сумма заказа: {calculateTotalPrice()} тенге</label>
-        <button type="button" onClick={handleOrder}>
-          Заказать
-        </button>
-      </form>
+      <Title level={2}>Payment</Title>
+      <Form className={styles.formContainer}>
+        <Form.Item label="Имя" name="name" rules={[{ required: true, message: "Введите ваше имя" }]}>
+          <Input value={formData.name} onChange={handleInputChange} />
+        </Form.Item>
+        <Form.Item label="Номер" name="number" rules={[{ required: true, message: "Введите ваш номер" }]}>
+          <Input value={formData.number} onChange={handleInputChange} />
+        </Form.Item>
+        <Form.Item label="Адрес" name="address" rules={[{ required: true, message: "Введите ваш адрес" }]}>
+          <Input value={formData.address} onChange={handleInputChange} />
+        </Form.Item>
+        <Form.Item>
+          <Title level={4}>Общая сумма заказа: {calculateTotalPrice()} тенге</Title>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" onClick={handleOrder}>
+            Заказать
+          </Button>
+        </Form.Item>
+      </Form>
       <div className={styles.orderDetails}>
-        <h3>Детали заказа:</h3>
+        <Title level={3}>Детали заказа:</Title>
         {cartItems.map((item) => (
           <p key={item.id}>
             {item.name}: {item.price}

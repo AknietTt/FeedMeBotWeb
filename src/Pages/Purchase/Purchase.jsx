@@ -11,7 +11,6 @@ function Purchase() {
 
   return (
     <div>
-      <h2>Purchase</h2>
       <Routes>
         <Route path="/" element={<Category />} />
         <Route path={`category/:categoryid`} element={<Foods />} />

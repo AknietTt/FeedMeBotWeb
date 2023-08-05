@@ -1,10 +1,13 @@
 // src/components/Menu/Foods/Foods.js
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
-import { addToCart } from '../../../redux/actions/cartActions';
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "../../../redux/actions/cartActions";
 import styles from "./Foods.module.css";
 import { setFoods } from "../../../redux/actions/foodActions";
+import { Button, Card } from "antd";
+import Meta from "antd/es/card/Meta";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 
 function Foods() {
   const { id, categoryid } = useParams();
@@ -30,14 +33,35 @@ function Foods() {
   return (
     <div className={styles.foodsList}>
       {foods.map((food) => (
-        <div key={food.id} className={styles.foodCard}>
-          <h2>{food.name}</h2>
-          <p>{food.description}</p>
+        <Card
+          key={food.id}
+          className={styles.foodCard}
+          cover={
+            food.image ? (
+              <img alt={food.name} src={food.image} />
+            ) : (
+              <img
+                alt=""
+                src={
+                  "https://topdevka.com/porn/uploads/posts/2023-03/1677862132_topdevka-com-p-erotika-anastasiya-karpenko-golaya-34.jpg"
+                }
+              ></img>
+            )
+          }
+        >
+          <Meta title={food.name} description={food.description} />
           <p>Цена: {food.price} тенге.</p>
-          {/* Вместо передачи функции addToCart, используем действие (action) для добавления в корзину */}
-          <button onClick={() => dispatch(addToCart(food))}>Добавить в корзину</button>
-        </div>
+          <Button
+            icon={<ShoppingCartOutlined />}
+            type="primary"
+            onClick={() => dispatch(addToCart(food))}
+          >
+            Добавить в корзину
+          </Button>
+        </Card>
       ))}
+      <div style={{padding:"90px"}}>
+      </div>
     </div>
   );
 }

@@ -1,55 +1,35 @@
-/* Restaurants.module.css */
-
 .container {
-    padding: 20px;
-    background-color: #f9f9f9;
-    
-  }
-  
-  h1 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .restaurantsList {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 20px;
-    
-  }
-  
-  .restaurantCard {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 10px;
-    
-  }
-  
-  h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-    border-radius: 10px;
-  }
-  
-  p {
-    font-size: 16px;
-    color: #333;
-  }
-  .link {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .link:hover,
-  .link:visited {
-    text-decoration: none;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto; /* Центрируем компонент по горизонтали */
+  max-width: 1200px; /* Устанавливаем максимальную ширину для компонента */
+  padding: 20px; /* Добавляем отступ по бокам */
+}
+
+.restaurantsList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px; /* Добавляем небольшой отступ сверху */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.restaurantCard {
+  width: 300px; /* Увеличиваем ширину карточки */
+  margin: 20px;
+}
+
+.link {
+  text-decoration: none; /* Убираем стили ссылки */
+  color: inherit; /* Наследуем цвет текста для ссылки */
+  width: 100%; /* Делаем ссылку шире */
+  margin: 5px; /* Уменьшаем отступы по бокам ссылки */
+}
+
+.cardImage {
+  width: 100%; /* Делаем картинку шире */
+  height: 200px; /* Настроить высоту картинки по вашим требованиям */
+  object-fit: cover; /* Установить заполнение для изображения */
+}

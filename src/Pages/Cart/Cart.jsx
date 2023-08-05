@@ -1,13 +1,16 @@
-// src/components/Cart/Cart.js
-import React from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeFromCart,
   increaseQuantity,
   decreaseQuantity,
 } from "../../redux/actions/cartActions";
+import { Button, List, Divider, Collapse } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 import styles from "./Cart.module.css";
 import { Link } from "react-router-dom";
+
+const { Panel } = Collapse;
 
 function Cart() {
   const cartItems = useSelector((state) => state.cart);
@@ -24,12 +27,6 @@ function Cart() {
     dispatch(increaseQuantity(itemId));
   };
 
-  const handlePay = () => {
-    // Implement your logic for payment processing here.
-    // You can redirect to a payment page or handle payment-related actions.
-    // For this example, we'll redirect to the '/payment' route.
-  };
-
   const handleDecreaseQuantity = (itemId) => {
     dispatch(decreaseQuantity(itemId));
   };
@@ -39,36 +36,64 @@ function Cart() {
   };
 
   return (
-    <div className={styles.cartContainer}>
-      <h3>Cart</h3>
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <div>
-          {cartItems.map((item) => (
-            <div className={styles.cartItem} key={item.id}>
-              <p>{item.name}</p>
-              <p>Price: {item.price}</p>
-              <div>
-                <button onClick={() => handleDecreaseQuantity(item.id)}>
-                  -
-                </button>
-                <span>{item.quantity}</span>
-                <button onClick={() => handleIncreaseQuantity(item.id)}>
-                  +
-                </button>
+    <div
+      className={styles.cartContainer}
+      style={{ position: "fixed", bottom: 0, right: 0, maxHeight: "80vh" }}
+    >
+      <h3>Корзина: сумма {calculateTotalPrice()} тг</h3>
+      <Link to={"/payment"}>
+        <Button type="primary">Оплатить</Button>
+      </Link>
+
+      {(
+        <div className={styles.cartPanel}>
+          <Collapse defaultActiveKey={[]} ghost>
+            <Panel header="Детали заказа" key="1">
+              <div
+                style={{ maxHeight: "calc(80vh - 120px)", overflowY: "auto" }}
+              >
+                {cartItems.length === 0 ? (
+                  <p>Корзина пустая.</p>
+                ) : (
+                  <div>
+                    <List
+                      dataSource={cartItems}
+                      renderItem={(item) => (
+                        <List.Item key={item.id} className={styles.cartItem}>
+                          <div>
+                            <p className={styles.itemName}>{item.name}</p>
+                            <p className={styles.itemPrice}>
+                              Цена: {item.price}
+                            </p>
+                          </div>
+                          <div className={styles.quantityContainer}>
+                            <Button
+                              onClick={() => handleDecreaseQuantity(item.id)}
+                            >
+                              -
+                            </Button>
+                            <span>{item.quantity}</span>
+                            <Button
+                              onClick={() => handleIncreaseQuantity(item.id)}
+                            >
+                              +
+                            </Button>
+                            <Button
+                              icon={<CloseOutlined />}
+                              onClick={() => handleRemoveItem(item.id)}
+                              className={styles.removeButton}
+                              style={{ padding: "0px 15px 0px 8px" }}
+                            />
+                          </div>
+                        </List.Item>
+                      )}
+                    />
+                    <Divider />
+                  </div>
+                )}
               </div>
-              <button onClick={() => handleRemoveItem(item.id)}>Remove</button>
-            </div>
-          ))}
-          {cartItems.some((item) => item.quantity >= 1) && (
-            <Link to={"/payment"}>
-              <button >Pay</button>
-            </Link>
-          )}
-          <p className={styles.totalPrice}>
-            Total Price: {calculateTotalPrice()}
-          </p>
+            </Panel>
+          </Collapse>
         </div>
       )}
     </div>
