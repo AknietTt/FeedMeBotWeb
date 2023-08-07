@@ -1,0 +1,10 @@
+.navigationArrows {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 999;
+  }

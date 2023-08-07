@@ -37,26 +37,19 @@ function Foods() {
           key={food.id}
           className={styles.foodCard}
           cover={
-            food.image ? (
-              <img alt={food.name} src={food.image} />
-            ) : (
-              <img
-                alt=""
-                src={
-                  "https://topdevka.com/porn/uploads/posts/2023-03/1677862132_topdevka-com-p-erotika-anastasiya-karpenko-golaya-34.jpg"
-                }
-              ></img>
-            )
+            <img  alt={food.name}  src={food.image || "https://klike.net/uploads/posts/2023-02/1676525022_3-144.jpg"} style={{height:"150px", objectFit:"cover"}} />
           }
         >
-          <Meta title={food.name} description={food.description} />
-          <p>Цена: {food.price} тенге.</p>
+          <Meta title={food.name} description={food.description} style={{padding:"0px"}} />
           <Button
+                  
             icon={<ShoppingCartOutlined />}
             type="primary"
             onClick={() => dispatch(addToCart(food))}
+            style={{marginTop:"7px"}}
+            
           >
-            Добавить в корзину
+            {food.price} тг
           </Button>
         </Card>
       ))}
