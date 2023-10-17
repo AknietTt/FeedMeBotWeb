@@ -8,14 +8,14 @@ import {
 import { Button, List, Divider, Collapse } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import styles from "./Cart.module.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const { Panel } = Collapse;
 
 function Cart() {
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-
+  const {id} = useParams();
   const calculateTotalPrice = () => {
     return cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
@@ -41,7 +41,7 @@ function Cart() {
       style={{ position: "fixed", bottom: 0, right: 0, maxHeight: "80vh" }}
     >
       <h3>Корзина: сумма {calculateTotalPrice()} тг</h3>
-      <Link to={"/payment"}>
+      <Link to={"/"+id+"/payment"}>
         <Button type="primary">Оплатить</Button>
       </Link>
 

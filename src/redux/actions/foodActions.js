@@ -34,3 +34,9 @@ export const removeFromCart = (itemId) => {
     payload: itemId,
   };
 };
+
+export const removeAllCart = ()=>{
+  return {
+    type:"REMOVE_ALL"
+  }
+}
